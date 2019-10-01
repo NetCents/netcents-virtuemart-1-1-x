@@ -4,4 +4,3 @@ if( !defined( '_VALID_MOS' ) && !defined( '_JEXEC' ) ) die( 'Direct Access to '.
 define ('NETCENTS_API_KEY', '');
 define ('NETCENTS_SECRET_KEY', '');
 define ('NETCENTS_GATEWAY', 'https://merchant.net-cents.com');
-?>
