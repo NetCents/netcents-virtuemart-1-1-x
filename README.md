@@ -1,8 +1,8 @@
 How to install:
 
-Upload the files to the appropriate directories. The file structure is consistent with that of your VirtueMart installation.
+Upload the files to the appropriate directories. The directory structure is consistent with that of your VirtueMart installation.
 
-For example move ps_netcents.php and ps_netcents.cfg.php to
+For example upload ps_netcents.php and ps_netcents.cfg.php to
 
 /administrator/components/com_virtuemart/classes/payment/
 
