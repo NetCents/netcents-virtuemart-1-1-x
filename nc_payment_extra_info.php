@@ -1,24 +1,49 @@
 <?php
 
-    $payload = array(
-        'external_id' => $order_info['order_id'],
-        'amount' => number_format($order_info['total'] * $this->currency->getvalue($order_info['currency_code']), 8, '.', ''),
-        'currency_iso' => $order_info['currency_code'],
-        'callback_url' => $this->url->link('extension/payment/netcents/success'),
-        'first_name' => $order_info['firstname'],
-        'last_name' => $order_info['lastname'],
-        'email' => $order_info['email'],
-        'webhook_url' => $this->url->link('extension/payment/netcents/callback'),
-        'merchant_id' => $this->config->get('payment_netcents_api_key'),
-        'data_encryption' => array(
-            'external_id' => $order_info['order_id'],
-            'amount' => number_format($order_info['total'] * $this->currency->getvalue($order_info['currency_code']), 8, '.', ''),
-            'currency_iso' => $order_info['currency_code'],
-            'callback_url' => $this->url->link('extension/payment/netcents/success'),
-            'first_name' => $order_info['firstname'],
-            'last_name' => $order_info['lastname'],
-            'email' => $order_info['email'],
-            'webhook_url' => $this->url->link('extension/payment/netcents/callback'),
-            'merchant_id' => $this->config->get('payment_netcents_api_key'),
-        )
-    );
+$data = array(
+  'external_id' => $db->f("order_number"),
+  'amount' => number_format($db->f("order_total"), 2, '.', ''),
+  'currency_iso' => $order_info['currency_code'],
+  'callback_url' => SECUREURL."nc_notify.php",
+  'first_name' => $user->first_name,
+  'last_name' => $user->last_name,
+  'email' => $user->email,
+  'webhook_url' => SECUREURL."nc_notify.php",
+  'merchant_id' => NETCENTS_API_KEY,
+  'data_encryption' => array(
+    'external_id' => $db->f("order_number"),
+    'amount' => number_format($db->f("order_total"), 2, '.', ''),
+    'currency_iso' => $order_info['currency_code'],
+    'callback_url' => SECUREURL."nc_notify.php",
+    'first_name' => $user->first_name,
+    'last_name' => $user->last_name,
+    'email' => $user->email,
+    'webhook_url' => SECUREURL."nc_notify.php",
+    'merchant_id' => NETCENTS_API_KEY,
+  )
+);
+$payload = json_encode($data);
+
+$ch = curl_init(NETCENTS_GATEWAY . "/api/v1/widget/encrypt");
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLINFO_HEADER_OUT, true);
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+curl_setopt(
+  $ch,
+  CURLOPT_HTTPHEADER,
+  array(
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($payload),
+    'Authorization: Basic ' . base64_encode( NETCENTS_API_KEY. ':' . NETCENTS_SECRET_KEY)
+  )
+);
+$result = curl_exec($ch);
+$json = json_decode($result, true);
+$redirect_url = NETCENTS_GATEWAY . "/merchant/widget?data=" . $json['token'] . '&widget_id=' . NETCENTS_HOSTED_PAYMENT_ID;
+curl_close($ch);
+
+?>
+
+<p>Click on the link below to pay the invoice.</p>
+<a href="<?php echo $redirect_url ?>">Pay invoice</a>

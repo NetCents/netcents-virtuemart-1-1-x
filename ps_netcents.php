@@ -52,6 +52,13 @@ class ps_netcents
                 <td>Your Secret key found in your merchant account</td>
             </tr>
             <tr>
+                <td><strong>NetCents Hosted Payment ID</strong></td>
+                <td>
+                    <input type="text" name="NETCENTS_HOSTED_PAYMENT_ID" class="inputbox" value="<?php echo NETCENTS_HOSTED_PAYMENT_ID ?>" />
+                </td>
+                <td>Hosted Payment ID that you created in your merchant account</td>
+            </tr>
+            <tr>
                 <td><strong>Gateway URL</strong></td>
                 <td>
                     <input type="text" name="NETCENTS_GATEWAY" class="inputbox" value="<?php echo NETCENTS_GATEWAY ?>" />
@@ -101,6 +108,7 @@ class ps_netcents
             "NETCENTS_API_KEY" => $d['NETCENTS_API_KEY'],
             "NETCENTS_SECRET_KEY" => $d['NETCENTS_SECRET_KEY'],
             "NETCENTS_GATEWAY" => $d['NETCENTS_GATEWAY'],
+            "NETCENTS_HOSTED_PAYMENT_ID" => $d['NETCENTS_HOSTED_PAYMENT_ID'],
         );
         $config = "<?php\n";
         $config .= "if( !defined( '_VALID_MOS' ) && !defined( '_JEXEC' ) ) die( 'Direct Access to '.basename(__FILE__).' is not allowed.' ); \n\n";
