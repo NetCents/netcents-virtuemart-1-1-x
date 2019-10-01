@@ -45,5 +45,4 @@ curl_close($ch);
 
 ?>
 
-<p>Click on the link below to pay the invoice.</p>
-<a href="<?php echo $redirect_url ?>">Pay invoice</a>
+<a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
