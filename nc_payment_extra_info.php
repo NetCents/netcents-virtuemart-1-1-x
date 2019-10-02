@@ -44,7 +44,8 @@ $result = curl_exec($ch);
 $json = json_decode($result, true);
 $redirect_url = NETCENTS_GATEWAY . "/merchant/widget?data=" . $json['token'] . '&widget_id=' . NETCENTS_HOSTED_PAYMENT_ID;
 curl_close($ch);
+if ($_GET['page'] != 'account.order_details') {
 
 ?>
-
 <a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
+<?php } ?>

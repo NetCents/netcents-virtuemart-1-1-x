@@ -119,10 +119,11 @@ class ps_netcents
                     $json = json_decode($result, true);
                     $redirect_url = NETCENTS_GATEWAY . "/merchant/widget?data=" . $json['token'] . '&widget_id=' . NETCENTS_HOSTED_PAYMENT_ID;
                     curl_close($ch);
-
+                    if ($_GET['page'] != 'account.order_details') {
+                        echo '<a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>';
+                    }    
                     ?>
-
-                    <a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
+                    
                     </textarea>
                     <button onClick="CopyAndPaste('NETCENTS_FORM', 'payment_extrainfo')">Finish set up</button> 
                 </td>

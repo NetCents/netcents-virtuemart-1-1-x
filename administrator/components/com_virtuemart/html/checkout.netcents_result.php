@@ -4,7 +4,7 @@ if (!defined('_VALID_MOS') && !defined('_JEXEC')) die('Direct Access to ' . base
 if (!isset($_REQUEST["order_number"]) || empty($_REQUEST["order_number"])) {
     echo $VM_LANG->_('VM_CHECKOUT_ORDERIDNOTSET');
 } else {
-    $order_number = $_GET['order_number'];
+    $order_number = mysql_real_escape_string($_GET['order_number']);
     $qv = "SELECT order_id, order_number FROM jos_vm_orders WHERE order_number='" . $order_number . "'";
     $dbbt = new ps_DB;
     $dbbt->query($qv);
