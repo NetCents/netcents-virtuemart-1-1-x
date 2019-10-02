@@ -16,12 +16,11 @@ if (!isset($_REQUEST["order_number"]) || empty($_REQUEST["order_number"])) {
         <a href="<?php @$sess->purl(SECUREURL . "index.php?option=com_virtuemart&page=account.order_details&order_id=" . $d['order_id']) ?>">
             View full payment invoice
         </a>
-    <?php
-        } else {
-            ?>
+<?php
+    } else {
+?>
         <h2> Unable to find order </h2>
 <?php
     }
 }
-
 ?>

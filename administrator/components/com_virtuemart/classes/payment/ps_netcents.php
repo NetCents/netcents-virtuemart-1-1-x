@@ -37,9 +37,9 @@ class ps_netcents
         require_once(CLASSPATH . "payment/" . $this->classname . ".cfg.php");
         ?>
         <script type="text/javascript">
-        function CopyAndPaste( from, to ) {
-            document.getElementsByName(to)[0].value = document.getElementsByName(from)[0].value;
-        }
+            function CopyAndPaste(from, to) {
+                document.getElementsByName(to)[0].value = document.getElementsByName(from)[0].value;
+            }
         </script>
         <table>
             <tr>
@@ -125,7 +125,7 @@ class ps_netcents
                     ?>
                     
                     </textarea>
-                    <button onClick="CopyAndPaste('NETCENTS_FORM', 'payment_extrainfo')">Finish set up</button> 
+                    <button onClick="CopyAndPaste('NETCENTS_FORM', 'payment_extrainfo')">Finish set up</button>
                 </td>
             </tr>
         </table>

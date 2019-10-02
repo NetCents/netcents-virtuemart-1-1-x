@@ -9,7 +9,7 @@ $data = array(
   'first_name' => $user->first_name,
   'last_name' => $user->last_name,
   'email' => $user->email,
-  'webhook_url' => SECUREURL."nc_notify.php",
+  'webhook_url' => SECUREURL . "nc_notify.php",
   'merchant_id' => NETCENTS_API_KEY,
   'data_encryption' => array(
     'external_id' => $db->f("order_id"),
@@ -19,7 +19,7 @@ $data = array(
     'first_name' => $user->first_name,
     'last_name' => $user->last_name,
     'email' => $user->email,
-    'webhook_url' => SECUREURL."nc_notify.php",
+    'webhook_url' => SECUREURL . "nc_notify.php",
     'merchant_id' => NETCENTS_API_KEY,
   )
 );
@@ -37,7 +37,7 @@ curl_setopt(
   array(
     'Content-Type: application/json',
     'Content-Length: ' . strlen($payload),
-    'Authorization: Basic ' . base64_encode( NETCENTS_API_KEY. ':' . NETCENTS_SECRET_KEY)
+    'Authorization: Basic ' . base64_encode(NETCENTS_API_KEY . ':' . NETCENTS_SECRET_KEY)
   )
 );
 $result = curl_exec($ch);
@@ -46,6 +46,6 @@ $redirect_url = NETCENTS_GATEWAY . "/merchant/widget?data=" . $json['token'] . '
 curl_close($ch);
 if ($_GET['page'] != 'account.order_details') {
 
-?>
-<a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
+  ?>
+  <a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
 <?php } ?>
