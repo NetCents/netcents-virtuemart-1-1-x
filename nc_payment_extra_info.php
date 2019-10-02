@@ -48,4 +48,6 @@ if ($_GET['page'] != 'account.order_details') {
 
   ?>
   <a style="font-size:18px" href="<?php echo $redirect_url ?>">Click here to redirect to NetCents and Pay your invoice</a>
-<?php } ?>
+<?php
+}
+?>
