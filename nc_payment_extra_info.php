@@ -1,20 +1,21 @@
 <?php
 
+$callback_url = "/index.php?page=checkout.netcents_result&order_number=" . $db->f("order_number") . "&option=com_virtuemart";
 $data = array(
-  'external_id' => $db->f("order_number"),
+  'external_id' => $db->f("order_id"),
   'amount' => number_format($db->f("order_total"), 2, '.', ''),
-  'currency_iso' => $order_info['currency_code'],
-  'callback_url' => SECUREURL."nc_notify.php",
+  'currency_iso' => $_SESSION['vendor_currency'],
+  'callback_url' => SECUREURL . $callback_url,
   'first_name' => $user->first_name,
   'last_name' => $user->last_name,
   'email' => $user->email,
   'webhook_url' => SECUREURL."nc_notify.php",
   'merchant_id' => NETCENTS_API_KEY,
   'data_encryption' => array(
-    'external_id' => $db->f("order_number"),
+    'external_id' => $db->f("order_id"),
     'amount' => number_format($db->f("order_total"), 2, '.', ''),
-    'currency_iso' => $order_info['currency_code'],
-    'callback_url' => SECUREURL."nc_notify.php",
+    'currency_iso' => $_SESSION['vendor_currency'],
+    'callback_url' => SECUREURL . $callback_url,
     'first_name' => $user->first_name,
     'last_name' => $user->last_name,
     'email' => $user->email,
@@ -22,6 +23,7 @@ $data = array(
     'merchant_id' => NETCENTS_API_KEY,
   )
 );
+
 $payload = json_encode($data);
 
 $ch = curl_init(NETCENTS_GATEWAY . "/api/v1/widget/encrypt");
