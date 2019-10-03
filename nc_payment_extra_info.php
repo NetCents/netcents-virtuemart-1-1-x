@@ -1,6 +1,6 @@
 <?php
 
-$callback_url = "/index.php?page=checkout.netcents_result&order_number=" . $db->f("order_number") . "&option=com_virtuemart";
+$callback_url = "/index.php?page=checkout.netcents_result&order_id=" . $db->f("order_id") . "&option=com_virtuemart";
 $data = array(
   'external_id' => $db->f("order_id"),
   'amount' => number_format($db->f("order_total"), 2, '.', ''),
