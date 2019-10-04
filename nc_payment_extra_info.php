@@ -1,25 +1,26 @@
 <?php
 
-$callback_url = "/index.php?page=checkout.netcents_result&order_id=" . $db->f("order_id") . "&option=com_virtuemart";
+$callback_url = SECUREURL . "index.php?page=checkout.netcents_result&order_id=" . $db->f("order_id") . "&option=com_virtuemart";
+$webhook_url = SECUREURL . "administrator/components/com_virtuemart/netcents_notify.php";
 $data = array(
   'external_id' => $db->f("order_id"),
   'amount' => number_format($db->f("order_total"), 2, '.', ''),
   'currency_iso' => $_SESSION['vendor_currency'],
-  'callback_url' => SECUREURL . $callback_url,
+  'callback_url' => $callback_url,
   'first_name' => $user->first_name,
   'last_name' => $user->last_name,
   'email' => $user->email,
-  'webhook_url' => SECUREURL . "nc_notify.php",
+  'webhook_url' => $webhook_url,
   'merchant_id' => NETCENTS_API_KEY,
   'data_encryption' => array(
     'external_id' => $db->f("order_id"),
     'amount' => number_format($db->f("order_total"), 2, '.', ''),
     'currency_iso' => $_SESSION['vendor_currency'],
-    'callback_url' => SECUREURL . $callback_url,
+    'callback_url' => $callback_url,
     'first_name' => $user->first_name,
     'last_name' => $user->last_name,
     'email' => $user->email,
-    'webhook_url' => SECUREURL . "nc_notify.php",
+    'webhook_url' => $webhook_url,
     'merchant_id' => NETCENTS_API_KEY,
   )
 );
