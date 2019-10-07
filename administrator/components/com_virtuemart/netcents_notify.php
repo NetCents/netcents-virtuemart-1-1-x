@@ -1,4 +1,19 @@
 <?php
+
+    function getRequestIP() {
+        $ipaddress = 'UNKNOWN';
+        $keys=array('HTTP_CLIENT_IP','HTTP_X_FORWARDED_FOR','HTTP_X_FORWARDED','HTTP_FORWARDED_FOR','HTTP_FORWARDED','REMOTE_ADDR');
+        foreach($keys as $k)
+        {
+            if (isset($_SERVER[$k]) && !empty($_SERVER[$k]) && filter_var($_SERVER[$k], FILTER_VALIDATE_IP))
+            {
+                $ipaddress = $_SERVER[$k];
+                break;
+            }
+        }
+        return $ipaddress;
+    }
+
     if (isset($_POST["data"])) {
         global $mosConfig_absolute_path, $mosConfig_live_site, $mosConfig_lang, $database,
         $mosConfig_mailfrom, $mosConfig_fromname;
@@ -84,8 +99,7 @@
         
 	    // Constructor initializes the session!
         $sess = new ps_session();             
-        
-	    if (gethostbyname("www.net-cents.com") == $_SERVER['REMOTE_ADDR']) {
+	    if (gethostbyname("www.net-cents.com") == getRequestIP()) {
             $signature = $_POST['signature'];
             $data = $_POST['data'];
             $signing = $_POST['signing'];
@@ -99,7 +113,6 @@
             $hash_hmac = hash_hmac("sha256", $hashable_payload, $signing);
             $timestamp_tolerance = 120;
             $date = new DateTime();
-            $current_timestamp = $date->getTimestamp();
             if ($hash_hmac == $signature && ($current_timestamp - $timestamp) / 60 < $timestamp_tolerance) {
                 $order_id = intval($decoded_data->external_id);
                 $qv = "SELECT order_id, order_number, user_id FROM jos_vm_orders WHERE order_id='" . $order_id . "'";
