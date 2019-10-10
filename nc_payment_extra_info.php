@@ -2,9 +2,10 @@
 
 $callback_url = SECUREURL . "index.php?page=checkout.netcents_result&order_id=" . $db->f("order_id") . "&option=com_virtuemart";
 $webhook_url = SECUREURL . "administrator/components/com_virtuemart/netcents_notify.php";
+$amount_in_vendor_currency = $GLOBALS['CURRENCY']->convert($db->f("order_total"), $db->f("order_currency"), $_SESSION['vendor_currency']);
 $data = array(
   'external_id' => $db->f("order_id"),
-  'amount' => number_format($db->f("order_total"), 2, '.', ''),
+  'amount' => number_format($amount_in_vendor_currency, 2, '.', ''),
   'currency_iso' => $_SESSION['vendor_currency'],
   'callback_url' => $callback_url,
   'first_name' => $user->first_name,
@@ -14,7 +15,7 @@ $data = array(
   'merchant_id' => NETCENTS_API_KEY,
   'data_encryption' => array(
     'external_id' => $db->f("order_id"),
-    'amount' => number_format($db->f("order_total"), 2, '.', ''),
+    'amount' => number_format($amount_in_vendor_currency, 2, '.', ''),
     'currency_iso' => $_SESSION['vendor_currency'],
     'callback_url' => $callback_url,
     'first_name' => $user->first_name,
