@@ -11,23 +11,16 @@ if (!isset($_REQUEST["order_id"]) || empty($_REQUEST["order_id"])) {
     if ($dbbt->next_record()) {
         $current_user_id = $auth["user_id"];
         $order_user_id = $dbbt->f("user_id");
-        if ($current_user_id == $order_user_id) {
-            $d['order_id'] = $dbbt->f("order_id"); ?>
-            <h2>Your transaction is pending confirmation on the blockchain.</h2>
-            <h2>The payment status will be updated when it's confirmed.</h2>
-            <h2>Order number: <?php echo $dbbt->f("order_number") ?> </h2>
-            <a href="<?php @$sess->purl(SECUREURL . "index.php?option=com_virtuemart&page=account.order_details&order_id=" . $d['order_id']) ?>">
-                View full payment invoice
-            </a>
-
-<?php
+        $d['order_id'] = $dbbt->f("order_id"); ?>
+        <h2>Your transaction is pending confirmation on the blockchain.</h2>
+        <h2>The payment status will be updated when it's confirmed.</h2>
+        <h2>Order number: <?php echo $dbbt->f("order_number") ?> </h2>
+        <a href="<?php @$sess->purl(SECUREURL . "index.php?option=com_virtuemart&page=account.order_details&order_id=" . $d['order_id']) ?>">
+            View full payment invoice
+        </a>
+    <?php
         } else {
-?>
-            <h2> You cannot view this order. Please login </h2>
-<?php
-        }
-    } else {
-?>
+            ?>
         <h2> Unable to find order </h2>
 <?php
     }
